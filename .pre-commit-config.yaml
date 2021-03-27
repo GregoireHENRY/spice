@@ -1,0 +1,38 @@
+---
+fail_fast: true
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: master
+      hooks:
+          - id: check-added-large-files
+            args: [--maxkb=500]
+          - id: check-executables-have-shebangs
+          - id: check-merge-conflict
+          - id: end-of-file-fixer
+          - id: trailing-whitespace
+    - repo: https://github.com/jumanjihouse/pre-commit-hooks
+      rev: master
+      hooks:
+          - id: forbid-binary
+            exclude: |
+                (?x)^(
+                    rsc/.*\.(png|gif)
+                )$
+          - id: markdownlint
+    - repo: https://github.com/Lucas-C/pre-commit-hooks-go
+      rev: master
+      hooks:
+          - id: checkmake
+    - repo: https://github.com/pocc/pre-commit-hooks
+      rev: master
+      hooks:
+          - id: clang-format
+            args: [--style=LLVM]
+            exclude: examples/
+    - repo: local
+      hooks:
+          - id: scan-build
+            name: Linter
+            language: system
+            entry: scan-build make
+            pass_filenames: false

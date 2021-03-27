@@ -1,0 +1,6 @@
+# Binaries
+spice
+obj/*.o
+
+# Resources
+rsc/*
