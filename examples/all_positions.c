@@ -11,7 +11,7 @@
 int main() {
   System system =
       system_new("rsc/data/hera_PO_EMA_2024.tm", "J2000", "HERA", "DIMORPHOS",
-                 "2027-MAR-23 16:00:00", 14.0 * DAY, "NONE");
+                 "2027-MAR-23 16:00:00", 129.0 * DAY, "NONE");
 
   double time_step = 1.0 * DAY;
 
@@ -19,9 +19,10 @@ int main() {
   unsigned int size = system_get_number_points(&system, time_step);
 
   SpiceDouble *distances = compute_distances(positions, size);
+  char **times = system_get_times_formatted(&system, time_step);
 
   for (unsigned int i = 0; i < size; i++) {
-    printf("%.2f\n", distances[i]);
+    printf("%s -> %.2f km\n", times[i], distances[i]);
   }
 
   system_unload_kernel(&system);

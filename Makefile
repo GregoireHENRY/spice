@@ -32,7 +32,7 @@ LIBFLAGS := $(LIBRARIES) $(INCLUDES)
 
 # Main
 .PHONY: all clean test debug directories
-all: directories binary
+all: directories library
 
 clean:
 	rm -rf $(OBJECTS_DIRECTORY)
