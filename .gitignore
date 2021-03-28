@@ -1,5 +1,5 @@
 # Binaries
-spice
+spicetools
 obj/*.o
 
 # Resources

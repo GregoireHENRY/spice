@@ -1,12 +1,16 @@
 CC := gcc
-TARGET := spice
+AR := ar
+TARGET := spicetools
+LIB := spicetools
 
 # Directories
 SOURCES_DIRECTORY := src
-INCLUDES_SOURCES := includes \
-					${HOME}/sw/cspice/include
+HEADERS_DIRECTORY := includes \
+					../cspice/include
 OBJECTS_DIRECTORY := obj
-ADDITIONALS := ${HOME}/sw/cspice/lib/cspice.a
+LIBRARY_DIRECTORY := lib
+ADDITIONALS := ../cspice/lib/libcspice.a
+ADDITIONAL_LIBRARIES := m
 
 # Flags
 LFLAGS := -O3 \
@@ -17,18 +21,18 @@ LFLAGS := -O3 \
 		  -pedantic \
 		  --std=c99
 RFLAGS :=
-LIBRARIES := m
+AR_LFLAGS := -crs
 
 # Apply setup
 SOURCES := $(shell find $(SOURCES_DIRECTORY) -type f -name *.c)
 OBJECTS := $(patsubst $(SOURCES_DIRECTORY)/%,$(OBJECTS_DIRECTORY)/%,$(SOURCES:.c=.o))
-INCLUDES := $(addprefix -I, $(INCLUDES_SOURCES))
-LIBRARIES := $(addprefix -l, $(LIBRARIES))
+INCLUDES := $(addprefix -I, $(HEADERS_DIRECTORY))
+LIBRARIES := $(addprefix -l, $(ADDITIONAL_LIBRARIES))
 LIBFLAGS := $(LIBRARIES) $(INCLUDES)
 
 # Main
 .PHONY: all clean test debug directories
-all: directories $(TARGET)
+all: directories binary
 
 clean:
 	rm -rf $(OBJECTS_DIRECTORY)
@@ -42,10 +46,14 @@ debug:
 directories:
 		mkdir -p $(OBJECTS_DIRECTORY)
 
-# Link objects
-$(TARGET): $(OBJECTS)
-	$(CC) $(LFLAGS) -o $(TARGET) $^ $(ADDITIONALS) $(LIBFLAGS) $(RFLAGS)
-
 # Compile
 $(OBJECTS_DIRECTORY)/%.o: $(SOURCES_DIRECTORY)/%.c
 	$(CC) $(LFLAGS) -o $@ -c $< $(LIBFLAGS) $(RFLAGS)
+
+# Link objects
+binary: $(OBJECTS)
+	$(CC) $(LFLAGS) -o $(TARGET) $^ $(ADDITIONALS) $(LIBFLAGS) $(RFLAGS)
+
+# Link objects
+library: $(OBJECTS)
+	$(AR) $(AR_LFLAGS) $(LIBRARY_DIRECTORY)/lib$(LIB).a $^
