@@ -2,7 +2,7 @@
 
 const double DAY = 86400.0;
 
-const char *TIME_FORMAT = "YYYY-MON-DD HR:MN::SC ::RND";
+const char *TIME_FORMAT = "YYYY-MON-DD HR:MN:SC ::RND";
 const unsigned int TIME_FORMAT_SIZE = 21;
 
 System system_new(char *KERNEL, char *FRAME, char *OBSERVER, char *TARGET,

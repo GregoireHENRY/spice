@@ -6,10 +6,10 @@ LIB := spicetools
 # Directories
 SOURCES_DIRECTORY := src
 HEADERS_DIRECTORY := includes \
-					../cspice/include
+					/home/greg/sw/cspice/include
 OBJECTS_DIRECTORY := obj
 LIBRARY_DIRECTORY := lib
-ADDITIONALS := ../cspice/lib/libcspice.a
+ADDITIONALS := /home/greg/sw/cspice/lib/libcspice.a
 ADDITIONAL_LIBRARIES := m
 
 # Flags
